@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="1" author="juan">
+	  <createTable tableName="usuarios">
+	    <column name="id" type="BIGINT" autoIncrement="true">
+          <constraints nullable="false"/>
+        </column>
+        <column name="usuario" type="VARCHAR(50)">
+          <constraints nullable="false"/>
+        </column>
+        <column name="nombres" type="VARCHAR(250)" />
+        <column name="apellidos" type="VARCHAR(250)" />
+        <column name="email" type="VARCHAR(250)" />
+        <column name="clave" type="bytea" />
+        <column name="salt" type="bytea" />
+        <column name="version" type="INTEGER" >
+          <constraints nullable="false"/>
+        </column>
+	  </createTable>
+	</changeSet>
+	<changeSet id="2" author="juan">
+      <addPrimaryKey tableName="usuarios" constraintName="usuarios_pk" columnNames="id"/>
+    </changeSet>
+	
+	<changeSet id="4" author="juan">
+	  <createTable tableName="roles">
+	    <column name="id" type="BIGINT" autoIncrement="true">
+          <constraints nullable="false"/>
+        </column>
+        <column name="descripcion" type="VARCHAR(250)">
+          <constraints nullable="false"/>
+        </column>
+        <column name="version" type="INTEGER" >
+          <constraints nullable="false"/>
+        </column>
+	  </createTable>
+	</changeSet>
+	<changeSet id="5" author="juan">
+      <addPrimaryKey tableName="roles" constraintName="roles_pk" columnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="6" author="juan">
+      <sql>
+      insert into roles(descripcion, version)values('Administrador',0);
+      insert into roles(descripcion, version)values('Operario',0);
+      insert into roles(descripcion, version)values('Usuario Final',0);
+      </sql>
+    </changeSet>
+    
+    <changeSet id="7" author="juan">
+      <createTable tableName="usuarios_roles">
+        <column name="id" type="BIGINT" autoIncrement="true">
+          <constraints nullable="false"/>
+        </column>
+        <column name="usuario_id" type="BIGINT" >
+          <constraints nullable="false"/>
+        </column>
+        <column name="role_id" type="BIGINT" >
+          <constraints nullable="false"/>
+        </column>
+        <column name="version" type="INTEGER" >
+          <constraints nullable="false"/>
+        </column>
+      </createTable>
+    </changeSet>
+    <changeSet id="8" author="juan">
+      <addPrimaryKey tableName="usuarios_roles" constraintName="usuarios_roles_pk" columnNames="id"/>
+    </changeSet>
+    <changeSet id="9" author="juan" >
+      <addForeignKeyConstraint baseTableName="usuarios_roles" constraintName="usuarios_usuarios_roles_fk" baseColumnNames="usuario_id" referencedTableName="usuarios" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="10" author="juan" >
+      <addForeignKeyConstraint baseTableName="usuarios_roles" constraintName="roles_usuarios_roles_fk" baseColumnNames="role_id" referencedTableName="roles" referencedColumnNames="id"/>
+    </changeSet>
+    
+    
+</databaseChangeLog>
