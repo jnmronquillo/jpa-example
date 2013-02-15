@@ -84,9 +84,9 @@ public class UsuarioDao {
 //		TypedQuery<Usuario> q = emProvider.get().createNamedQuery("allUsers", Usuario.class);
 //		usuarios = q.getResultList();
 		
-//		String jpql = "select u from Usuario u order by u.usuario asc";
-//		TypedQuery<Usuario> q = emProvider.get().createQuery(jpql, Usuario.class);
-//		usuarios = q.getResultList();
+		String jpql = "select u from Usuario u order by u.usuario asc";
+		TypedQuery<Usuario> q = emProvider.get().createQuery(jpql, Usuario.class);
+		usuarios = q.getResultList();
 		
 //		String sql = "select * from usuarios order by usuario asc";
 //		Query q = emProvider.get().createNativeQuery(sql, Usuario.class);
@@ -103,17 +103,20 @@ public class UsuarioDao {
 	}
 	
 	public List<Role> getAllRoles() {
-
-		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
-		CriteriaQuery<Role> c = cb.createQuery(Role.class);
-		Root<Role> r = c.from(Role.class);
-		c.orderBy(cb.asc(r.get(Role_.descripcion)));
-		TypedQuery<Role> q = emProvider.get().createQuery(c);		
-		return q.getResultList();
+		List<Role> roles = null;
+		
+//		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
+//		CriteriaQuery<Role> c = cb.createQuery(Role.class);
+//		Root<Role> r = c.from(Role.class);
+//		c.orderBy(cb.asc(r.get(Role_.descripcion)));
+//		TypedQuery<Role> q = emProvider.get().createQuery(c);	
+//		roles = q.getResultList();
+		return roles;
 	}
 		
 	public List<UsuarioRole>  getRoles(Usuario usuario){
 		List<UsuarioRole> usuarioroles = null;
+		
 		String jpql = "select ur from UsuarioRole ur order by ur.role.descripcion ";
 		TypedQuery<UsuarioRole> q = emProvider.get().createQuery(jpql, UsuarioRole.class);
 		usuarioroles = q.getResultList();
@@ -122,7 +125,8 @@ public class UsuarioDao {
 //		CriteriaQuery<UsuarioRole> c = cb.createQuery(UsuarioRole.class);
 //		Root<UsuarioRole> r = c.from(UsuarioRole.class);
 //		Predicate condition = cb.equal(r.get(UsuarioRole_.usuario), usuario);
-//		c.where(condition);		
+//		c.where(condition);
+//		c.orderBy(cb.asc(r.get(UsuarioRole_.role).get(Role_.descripcion)));
 //		TypedQuery<UsuarioRole> q = emProvider.get().createQuery(c);
 //		usuarioroles = q.getResultList();
 		return usuarioroles;
