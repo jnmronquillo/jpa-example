@@ -25,7 +25,10 @@ public class App {
 		try {
 			
 //			createUser();
-			//editUser();
+//			editUser();
+//			listUser();
+			
+//			addRolesUser();
 			listUser();
 		} catch (Exception e) {
 			e.printStackTrace();

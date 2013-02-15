@@ -80,4 +80,115 @@
     </changeSet>
     
     
+<changeSet author="juan" id="38">
+<createTable tableName="departamentos">
+  <column name="id" type="bigint" autoIncrement="true">
+    <constraints nullable="false"/>
+  </column>
+  <column name="codigo" type="VARCHAR(50)">
+    <constraints nullable="false"/>
+  </column>
+  <column name="descripcion" type="VARCHAR(150)">
+    <constraints nullable="false"/>
+  </column>
+  <column name="version" type="INTEGER" />
+</createTable>
+</changeSet>
+
+<changeSet author="juan" id="39">
+<addPrimaryKey tableName="departamentos" constraintName="departamentos_pk" columnNames="id"/>
+</changeSet>
+
+<changeSet author="juan" id="40">
+<createTable tableName="provincias">
+  <column name="id" type="bigint" autoIncrement="true">
+    <constraints nullable="false"/>
+  </column>
+  <column name="codigo" type="VARCHAR(50)">
+    <constraints nullable="false"/>
+  </column>
+  <column name="descripcion" type="VARCHAR(150)">
+    <constraints nullable="false"/>
+  </column>
+  <column name="departamento_id" type="INTEGER">
+    <constraints nullable="false"/>
+  </column>
+  <column name="version" type="INTEGER" />
+</createTable>
+</changeSet>
+
+<changeSet author="juan" id="41">
+<addPrimaryKey tableName="provincias" constraintName="provincias_pk" columnNames="id"/>
+</changeSet>
+
+<changeSet author="juan" id="42">
+<addForeignKeyConstraint baseTableName="provincias" constraintName="departamentos_provincias_fk" baseColumnNames="departamento_id" referencedTableName="departamentos" referencedColumnNames="id"/>
+</changeSet>
+
+<changeSet author="juan" id="43">
+<createTable tableName="distritos">
+  <column name="id" type="bigint" autoIncrement="true">
+    <constraints nullable="false"/>
+  </column>
+  <column name="codigo" type="VARCHAR(50)">
+    <constraints nullable="false"/>
+  </column>
+  <column name="descripcion" type="VARCHAR(150)">
+    <constraints nullable="false"/>
+  </column>
+  <column name="provincia_id" type="INTEGER">
+    <constraints nullable="false"/>
+  </column>
+  <column name="version" type="INTEGER" />
+</createTable>
+</changeSet>
+
+<changeSet author="juan" id="44">
+<addPrimaryKey tableName="distritos" constraintName="distritos_pk" columnNames="id"/>
+</changeSet>
+
+<changeSet author="juan" id="45">
+<addForeignKeyConstraint baseTableName="distritos" constraintName="provincias_distritos_fk" baseColumnNames="provincia_id" referencedTableName="provincias" referencedColumnNames="id"/>
+</changeSet>
+    
+  
+<changeSet author="juan" id="51">
+<loadData tableName="departamentos" file="database/r1/departamentos.csv" >
+<column name="id" type="NUMERIC"/>
+<column name="codigo" type="STRING"/>
+<column name="descripcion" type="STRING"/>
+</loadData>
+</changeSet>
+
+<changeSet author="juan" id="52">
+<loadData tableName="provincias" file="database/r1/provincias.csv" >
+<column name="id" type="NUMERIC"/>
+<column name="codigo" type="STRING"/>
+<column name="descripcion" type="STRING"/>
+<column name="departamento_id" type="NUMERIC"/>
+</loadData>
+</changeSet>
+
+<changeSet author="juan" id="53">
+<loadData tableName="distritos" file="database/r1/distritos.csv" >
+<column name="id" type="NUMERIC"/>
+<column name="codigo" type="STRING"/>
+<column name="descripcion" type="STRING"/>
+<column name="provincia_id" type="NUMERIC"/>
+</loadData>
+</changeSet>
+
+<changeSet author="juan" id="54">
+<update tableName="departamentos">
+    <column name="version" valueNumeric="0"/>
+</update>
+<update tableName="provincias">
+    <column name="version" valueNumeric="0"/>
+</update>
+<update tableName="distritos">
+    <column name="version" valueNumeric="0"/>
+</update>
+</changeSet>
+  
+    
 </databaseChangeLog>

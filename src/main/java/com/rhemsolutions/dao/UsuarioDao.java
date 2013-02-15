@@ -84,21 +84,21 @@ public class UsuarioDao {
 //		TypedQuery<Usuario> q = emProvider.get().createNamedQuery("allUsers", Usuario.class);
 //		usuarios = q.getResultList();
 		
-		String jpql = "select u from Usuario u order by u.usuario asc";
-		TypedQuery<Usuario> q = emProvider.get().createQuery(jpql, Usuario.class);
-		usuarios = q.getResultList();
-		
+//		String jpql = "select u from Usuario u order by u.usuario asc";
+//		TypedQuery<Usuario> q = emProvider.get().createQuery(jpql, Usuario.class);
+//		usuarios = q.getResultList();
+//		
 //		String sql = "select * from usuarios order by usuario asc";
 //		Query q = emProvider.get().createNativeQuery(sql, Usuario.class);
 //		usuarios = q.getResultList();
 		
 		//criteria API
-		/*CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
+		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
 		CriteriaQuery<Usuario> c = cb.createQuery(Usuario.class);
 		Root<Usuario> r = c.from(Usuario.class);
 		c.orderBy(cb.asc(r.get(Usuario_.usuario)));
 		TypedQuery<Usuario> q = emProvider.get().createQuery(c);
-		usuarios = q.getResultList();*/
+		usuarios = q.getResultList();
 		return usuarios;
 	}
 	
