@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -16,6 +18,9 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name="usuarios")
+@NamedQueries({
+@NamedQuery(name="allUsers", 
+			query="select u from Usuario u order by u.usuario asc ")})
 public class Usuario extends EntityBase {
 
 	private static final long serialVersionUID = 1L;

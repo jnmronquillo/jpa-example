@@ -5,6 +5,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -59,6 +60,14 @@ public class UsuarioDao {
 		emProvider.get().remove(usuario_role);
 	}
 	
+	public Usuario findUserById(Long id){
+		return emProvider.get().find(Usuario.class, id);
+	}
+	
+	public Role findRoleById(Long id){
+		return emProvider.get().find(Role.class, id);
+	}
+	
 	public Usuario getUser(String username){
 		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
 		CriteriaQuery<Usuario> c = cb.createQuery(Usuario.class);
@@ -70,13 +79,27 @@ public class UsuarioDao {
 	}
 	
 	public List<Usuario> getAllUsers() {
-
-		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
+		List<Usuario> usuarios = null;
+		
+//		TypedQuery<Usuario> q = emProvider.get().createNamedQuery("allUsers", Usuario.class);
+//		usuarios = q.getResultList();
+		
+//		String jpql = "select u from Usuario u order by u.usuario asc";
+//		TypedQuery<Usuario> q = emProvider.get().createQuery(jpql, Usuario.class);
+//		usuarios = q.getResultList();
+		
+//		String sql = "select * from usuarios order by usuario asc";
+//		Query q = emProvider.get().createNativeQuery(sql, Usuario.class);
+//		usuarios = q.getResultList();
+		
+		//criteria API
+		/*CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
 		CriteriaQuery<Usuario> c = cb.createQuery(Usuario.class);
 		Root<Usuario> r = c.from(Usuario.class);
 		c.orderBy(cb.asc(r.get(Usuario_.usuario)));
-		TypedQuery<Usuario> q = emProvider.get().createQuery(c);		
-		return q.getResultList();
+		TypedQuery<Usuario> q = emProvider.get().createQuery(c);
+		usuarios = q.getResultList();*/
+		return usuarios;
 	}
 	
 	public List<Role> getAllRoles() {
@@ -90,13 +113,19 @@ public class UsuarioDao {
 	}
 		
 	public List<UsuarioRole>  getRoles(Usuario usuario){
-		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
-		CriteriaQuery<UsuarioRole> c = cb.createQuery(UsuarioRole.class);
-		Root<UsuarioRole> r = c.from(UsuarioRole.class);
-		Predicate condition = cb.equal(r.get(UsuarioRole_.usuario), usuario);
-		c.where(condition);		
-		TypedQuery<UsuarioRole> q = emProvider.get().createQuery(c);
-		return q.getResultList();
+		List<UsuarioRole> usuarioroles = null;
+		String jpql = "select ur from UsuarioRole ur order by ur.role.descripcion ";
+		TypedQuery<UsuarioRole> q = emProvider.get().createQuery(jpql, UsuarioRole.class);
+		usuarioroles = q.getResultList();
+		
+//		CriteriaBuilder cb = emProvider.get().getCriteriaBuilder();
+//		CriteriaQuery<UsuarioRole> c = cb.createQuery(UsuarioRole.class);
+//		Root<UsuarioRole> r = c.from(UsuarioRole.class);
+//		Predicate condition = cb.equal(r.get(UsuarioRole_.usuario), usuario);
+//		c.where(condition);		
+//		TypedQuery<UsuarioRole> q = emProvider.get().createQuery(c);
+//		usuarioroles = q.getResultList();
+		return usuarioroles;
 	}
 	
 	
